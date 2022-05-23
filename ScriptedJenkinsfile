@@ -1,16 +1,17 @@
-node {
+node("ansible_docker"){
     stage("Git checkout"){
-        git credentialsId: '64b08ab1-e1f2-47c4-97b7-8a5c8968056f', url: 'git@github.com:pandamys/example-playbook.git'
+        git credentialsId: 'pandamys', url: 'git@github.com:pandamys/example-playbook.git'
     }
     stage("Check ssh key"){
         secret_check=true
     }
     stage("Run playbook"){
         if (secret_check){
+            sh 'cd /home/jenkins/workspace/ScriptedJenkinsfile'
             sh 'ansible-galaxy install -r requirements.yml'
-            sh 'cd /var/jenkins_home/workspace/ScriptedJenkinsfile'
             sh 'ansible-playbook site.yml -i inventory/prod.yml'
-        } else {
+        }
+        else{
             echo 'no more keys'
         }
         
