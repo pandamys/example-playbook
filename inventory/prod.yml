@@ -2,4 +2,4 @@
   java_app:
     hosts:
       localhost:
-        ansible_connection: 10.0.2.15
+        ansible_connection: local
