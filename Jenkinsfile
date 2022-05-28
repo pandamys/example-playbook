@@ -1,15 +1,12 @@
 pipeline {
-  agent any
-  stages {
-    stage('First stage'){
-      steps {
-        echo "I'm runing"  
-      }
+    agent any
+    stages {
+        stage('Test'){
+            steps {
+                git url: 'https://github.com/pandamys/example-playbook.git', branch: 'master'
+                sh 'ansible-galaxy install -r requirements.yml'
+                sh 'ansible-playbook site.yml -i inventory/prod.yml'
+            }
+        }
     }
-    stage('Second stage'){
-      steps {
-        echo "And I'm too"
-      }
-    }
-  }
 }
